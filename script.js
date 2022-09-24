@@ -27,6 +27,8 @@
 //       eventListener
 // 9- Enregistrer le highscore, pour cela il faut créer une variable qui va enregistrer les resultats et après 
 //    ajouter au code pour bien enregistrer les donnés
+// 10- Refactoring ou le principe DRY - Don't repeat yourself (ne pas repeter en français).
+// 10.1 - Identifier le code dupliqué
 
 let secretNumber = Math.trunc(Math.random() * 20 + 1); // 4
 let score = 20;
@@ -56,26 +58,38 @@ document.querySelector(".check").addEventListener("click", function() { // 1
             document.querySelector(".highscore").textContent = highscore;
         }
 
+    // Refactoring - Quand le joueur a indiqué un mauvais numéro
+    } else if (guess !== secretNumber) { // quand guess n'est pas le même (!==) que le secretNumber
+    if(score > 1 ) { // 6
+        document.querySelector(".message").textContent = guess > secretNumber ? "👇 C'est moins !" : "☝ C'est plus !";// 3.2
+        score--;
+        // score = score - 1; // 5
+        document.querySelector(".score").textContent = score; // 5.1
+    } else { 
+        document.querySelector(".message").textContent = "😈 Game Over 😈" // 6
+        document.querySelector(".score").textContent = 0
+    }  
+    //  ------------------------Code avant refactoring --------------------------------------
     // Numéro trop grand    
-    } else if (guess > secretNumber) {
-        if(score > 1 ) { // 6
-            document.querySelector(".message").textContent = "👇 C'est moins !" // 3.2
-            score = score - 1; // 5
-            document.querySelector(".score").textContent = score; // 5.1
-        } else { 
-            document.querySelector(".message").textContent = "😈 Game Over 😈" // 6
-            document.querySelector(".score").textContent = 0
-        }
-    // Numéro trop petit  
-    } else if (guess < secretNumber) {
-        if (score > 1 ) { // 6
-            document.querySelector(".message").textContent = "☝ C'est plus !" // 3.3
-            score--; // 5
-            document.querySelector(".score").textContent = score; // 5.1
-        } else {
-            document.querySelector(".message").textContent = "😈 Game Over 😈" // 6
-            document.querySelector(".score").textContent = 0
-        }
+    // } else if (guess > secretNumber) {
+    //     if(score > 1 ) { // 6
+    //         document.querySelector(".message").textContent =  // 3.2
+    //         score = score - 1; // 5
+    //         document.querySelector(".score").textContent = score; // 5.1
+    //     } else { 
+    //         document.querySelector(".message").textContent = "😈 Game Over 😈" // 6
+    //         document.querySelector(".score").textContent = 0
+    //     }
+    // // Numéro trop petit  
+    // } else if (guess < secretNumber) {
+    //     if (score > 1 ) { // 6
+    //         document.querySelector(".message").textContent = "☝ C'est plus !" // 3.3
+    //         score--; // 5
+    //         document.querySelector(".score").textContent = score; // 5.1
+    //     } else {
+    //         document.querySelector(".message").textContent = "😈 Game Over 😈" // 6
+    //         document.querySelector(".score").textContent = 0
+    //     }
 
     } 
 }); 
