@@ -37,15 +37,21 @@ let highscore = 0;
 // document.querySelector(".number").textContent = secretNumber;
 // console.log(secretNumber);
 
+const displayMessage = function(message) {
+    document.querySelector(".message").textContent = message;
+}
+
 document.querySelector(".check").addEventListener("click", function() { // 1
     const guess = Number(document.querySelector(".guess").value); // 2
 
     // Pas de numéro
     if (!guess) { // 3
-        document.querySelector(".message").textContent = "🛑 Tu as oublié le numéro" // 3
+        // document.querySelector(".message").textContent = "🛑 Tu as oublié le numéro" // 3
+        displayMessage("🛑 Tu as oublié le numéro");
     // Bon numéro    
     } else if (guess === secretNumber) {
-        document.querySelector(".message").textContent = "🎉 C'est le bon numéro !!!" // 3.1
+        // document.querySelector(".message").textContent = "🎉 C'est le bon numéro !!!" // 3.1
+        displayMessage("🎉 C'est le bon numéro !!!");
 
         document.querySelector(".number").textContent = secretNumber;
 
@@ -61,15 +67,17 @@ document.querySelector(".check").addEventListener("click", function() { // 1
     // Refactoring - Quand le joueur a indiqué un mauvais numéro
     } else if (guess !== secretNumber) { // quand guess n'est pas le même (!==) que le secretNumber
     if(score > 1 ) { // 6
-        document.querySelector(".message").textContent = guess > secretNumber ? "👇 C'est moins !" : "☝ C'est plus !";// 3.2
+        // document.querySelector(".message").textContent = guess > secretNumber ? "👇 C'est moins !" : "☝ C'est plus !";// 3.2
+        displayMessage(guess > secretNumber ? "👇 C'est moins !" : "☝ C'est plus !");
         score--;
         // score = score - 1; // 5
         document.querySelector(".score").textContent = score; // 5.1
     } else { 
-        document.querySelector(".message").textContent = "😈 Game Over 😈" // 6
+        // document.querySelector(".message").textContent = "😈 Game Over 😈" // 6
+        displayMessage("😈 Game Over 😈");
         document.querySelector(".score").textContent = 0
     }  
-    //  ------------------------Code avant refactoring --------------------------------------
+    //  ------------------------Code avant refactoring 1ere etape--------------------------------------
     // Numéro trop grand    
     // } else if (guess > secretNumber) {
     //     if(score > 1 ) { // 6
@@ -90,7 +98,7 @@ document.querySelector(".check").addEventListener("click", function() { // 1
     //         document.querySelector(".message").textContent = "😈 Game Over 😈" // 6
     //         document.querySelector(".score").textContent = 0
     //     }
-
+    //  ------------------------End Code avant refactoring 1ere etape--------------------------------------
     } 
 }); 
 
@@ -99,7 +107,8 @@ document.querySelector(".again").addEventListener("click", function(){
     secretNumber = Math.trunc(Math.random() * 20 + 1);
     document.querySelector("body").style.backgroundColor = "#222";
     document.querySelector(".number").style.width = "15rem";
-    document.querySelector(".message").textContent = "Commencer à jouer..."
+    // document.querySelector(".message").textContent = "Commencer à jouer..."
+    displayMessage("Commencer à jouer...");
     document.querySelector(".score").textContent = score;
     document.querySelector(".guess").value = "";
     document.querySelector(".number").textContent = "?"
